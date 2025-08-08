@@ -51,7 +51,7 @@ sed -i 's/PKG_HASH:=ff2a4f04e7732bc77730304e48f97fdd062be2b142ae34c518ab9b9d7a3b
 
 # 修改tailscale版本为官网最新v1.86.2 https://github.com/tailscale/tailscale 格式：https://codeload.github.com/tailscale/tailscale/tar.gz/v$(PKG_VERSION)?
 sed -i 's/PKG_VERSION:=1.84.2/PKG_VERSION:=1.86.2/' feeds/packages/net/tailscale/Makefile
-sed -i 's/PKG_HASH:=ce87e52fd4e8e52540162a2529c5d73f5f76c6679147a7887058865c9e01ec36/PKG_HASH:=9b7fe9f915744ca1448efeb88d7333b7a86df375a4623941d2e41880c51c0aec/' feeds/packages/net/tailscale/Makefile
+sed -i 's/PKG_HASH:=32673e5552e1176f1028a6a90a4c892d2475c92d1e952ca16156dc523d14d914/PKG_HASH:=9b7fe9f915744ca1448efeb88d7333b7a86df375a4623941d2e41880c51c0aec/' feeds/packages/net/tailscale/Makefile
 rm -rf feeds/packages/net/tailscale/patches
 
 # 跟随最新版naiveproxy
