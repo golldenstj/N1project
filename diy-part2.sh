@@ -55,11 +55,11 @@ sed -i 's/PKG_HASH:=32673e5552e1176f1028a6a90a4c892d2475c92d1e952ca16156dc523d14
 rm -rf feeds/packages/net/tailscale/patches
 
 # 跟随最新版naiveproxy
-rm -rf feeds/passwall_packages/naiveproxy
-rm -rf feeds/helloworld/naiveproxy
-git clone -b v5 https://github.com/sbwml/openwrt_helloworld.git
-cp -r openwrt_helloworld/naiveproxy feeds/passwall_packages
-cp -r openwrt_helloworld/naiveproxy feeds/helloworld
+# rm -rf feeds/passwall_packages/naiveproxy
+# rm -rf feeds/helloworld/naiveproxy
+# git clone -b v5 https://github.com/sbwml/openwrt_helloworld.git
+# cp -r openwrt_helloworld/naiveproxy feeds/passwall_packages
+# cp -r openwrt_helloworld/naiveproxy feeds/helloworld
 
 # 添加luci-app-homeproxy
 cp -r openwrt_helloworld/luci-app-homeproxy package
