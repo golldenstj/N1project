@@ -14,6 +14,13 @@ sed -i 's#192.168.1.1#192.168.1.99#g' package/base-files/files/bin/config_genera
 sed -i 's/LUCI_DEPENDS.*/LUCI_DEPENDS:=\@\(arm\|\|aarch64\)/g' feeds/luci/applications/luci-app-cpufreq/Makefile
 sed -i 's/services/system/g' feeds/luci/applications/luci-app-cpufreq/luasrc/controller/cpufreq.lua
 
+# 修改大雕源码里的erofs-utils源码位置
+sed -i \
+  -e 's|^PKG_SOURCE:=.*|PKG_SOURCE:=v$(PKG_VERSION).tar.gz|' \
+  -e 's|^PKG_SOURCE_URL=.*|PKG_SOURCE_URL:=https://kernel.googlesource.com/pub/scm/linux/kernel/git/xiang/erofs-utils/+archive/refs/tags|' \
+  -e 's|^PKG_HASH:=.*|PKG_HASH:=b2e168dc44ffdec5c3ef811b5f2312cb05caba084e95af3d426ec89c9e82a6f0|' \
+  tools/erofs-utils/Makefile
+
 # 升级大雕的rust源码到官方最新版本1.85.1
 sed -i 's/PKG_VERSION:=1.84.0/PKG_VERSION:=1.85.1/' feeds/packages/lang/rust/Makefile
 sed -i 's/PKG_HASH:=15cee7395b07ffde022060455b3140366ec3a12cbbea8f1ef2ff371a9cca51bf/PKG_HASH:=0f2995ca083598757a8d9a293939e569b035799e070f419a686b0996fb94238a/' feeds/packages/lang/rust/Makefile
