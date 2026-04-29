@@ -53,8 +53,23 @@ unzip OldPackages.zip
 cp -r packages-0f7be9fc93d68986c179829d8199824d3183eb60/net/frp feeds/packages/net/
 rm -rf OldPackages.zip packages-0f7be9fc93d68986c179829d8199824d3183eb60s
 
+# 加 noweb 标签规避v0.67之后的变动
 sed -i 's/PKG_VERSION:=0.53.2/PKG_VERSION:=0.68.1/' feeds/packages/net/frp/Makefile
 sed -i 's/PKG_HASH:=ff2a4f04e7732bc77730304e48f97fdd062be2b142ae34c518ab9b9d7a3b32ec/PKG_HASH:=44ed7107bf35e4f68dc0e77cd5805102effa5301528b89ee5ab0ab379088edc6/' feeds/packages/net/frp/Makefile
+
+grep -q 'GO_PKG_TAGS:=noweb' feeds/packages/net/frp/Makefile || \
+sed -i '/GO_PKG_BUILD_PKG:=github.com\/fatedier\/frp\/cmd\/\.\.\./a GO_PKG_TAGS:=noweb' feeds/packages/net/frp/Makefile
+
+grep -q 'web/frpc/dist' feeds/packages/net/frp/Makefile || cat >> feeds/packages/net/frp/Makefile <<'EOF'
+
+define Build/Prepare
+	$(call Build/Prepare/Default)
+	mkdir -p $(PKG_BUILD_DIR)/web/frpc/dist
+	mkdir -p $(PKG_BUILD_DIR)/web/frps/dist
+	touch $(PKG_BUILD_DIR)/web/frpc/dist/.keep
+	touch $(PKG_BUILD_DIR)/web/frps/dist/.keep
+endef
+EOF
 
 # 修改tailscale版本为官网最新v1.86.2 https://github.com/tailscale/tailscale 格式：https://codeload.github.com/tailscale/tailscale/tar.gz/v$(PKG_VERSION)?
 sed -i 's/PKG_VERSION:=1.84.2/PKG_VERSION:=1.86.2/' feeds/packages/net/tailscale/Makefile
