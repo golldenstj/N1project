@@ -180,3 +180,29 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 
 #修改xfsprogs的Makefile
 sed -i 's/TARGET_CFLAGS += -DHAVE_MAP_SYNC/TARGET_CFLAGS += -DHAVE_MAP_SYNC -D_LARGEFILE64_SOURCE/' feeds/packages/utils/xfsprogs/Makefile
+
+# =====================================================================
+# TVGuard - 家庭电视时间管理（LuCI 原生固件集成）
+# =====================================================================
+TVGUARD_DIR="package/luci-app-tvguard"
+
+# 防止重复软件包覆盖
+if [ -e "$TVGUARD_DIR" ]; then
+    echo "ERROR: TVGuard package directory already exists" >&2
+    exit 1
+fi
+
+# 与现有其他插件相同，直接跟踪主分支最新源码
+git clone --depth 1 -b main \
+    https://github.com/wekingchen/luci-app-tvguard.git \
+    "$TVGUARD_DIR" || exit 1
+
+# 确认原生打包所需文件完整
+if [ ! -f "$TVGUARD_DIR/Makefile" ] ||
+   [ ! -f "$TVGUARD_DIR/scripts/stage-openwrt-native.sh" ] ||
+   [ ! -f "$TVGUARD_DIR/native/root/etc/init.d/tvguard-native-bootstrap" ]; then
+    echo "ERROR: TVGuard native packaging files are missing" >&2
+    exit 1
+fi
+
+echo "TVGuard source integrated successfully"
